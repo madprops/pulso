@@ -3,6 +3,7 @@ const express = require("express")
 const config = require("./config.json")
 const sigHeaderName = "X-Hub-Signature-256"
 const sigHashAlg = "sha256"
+const { execSync } = require("child_process")
 
 const app = express()
 
@@ -31,7 +32,7 @@ function verifyPostData(req, res, next) {
 }
 
 app.post("/update", verifyPostData, function (req, res) {
-  res.status(200).send("Request body was signed")
+  execSync("echo OK")
 })
 
 app.use((err, req, res, next) => {
