@@ -32,7 +32,7 @@ function verifyPostData(req, res, next) {
 }
 
 app.post("/update", verifyPostData, function (req, res) {
-  execSync("echo OK")
+  console.log("Verification successful")
 })
 
 app.use((err, req, res, next) => {
