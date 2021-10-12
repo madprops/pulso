@@ -8,13 +8,15 @@ const app = express()
 app.use(express.json())
 
 app.post('/update', (req, res) => {
-  let sig = "sha1=" + crypto.createHmac('sha1', config.secret).update(chunk.toString()).digest('hex')
-
-  if (req.headers['x-hub-signature'] === sig) {
-    console.log("valid")
-  } else {
-    console.log("not valid")
-  }
+  req.on('data', function(chunk) {
+    let sig = "sha1=" + crypto.createHmac('sha1', config.secret).update(chunk.toString()).digest('hex')
+  
+    if (req.headers['x-hub-signature'] === sig) {
+      console.log("valid")
+    } else {
+      console.log("not valid")
+    }
+  })
 })
 
 app.listen(config.port, () => {
