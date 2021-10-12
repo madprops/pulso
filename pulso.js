@@ -1,8 +1,6 @@
 const crypto = require("crypto")
 const express = require("express")
 const config = require("./config.json")
-
-const secret = config.secret
 const sigHeaderName = "X-Hub-Signature-256"
 const sigHashAlg = "sha256"
 
@@ -22,7 +20,7 @@ function verifyPostData(req, res, next) {
   }
 
   const sig = Buffer.from(req.get(sigHeaderName) || "", "utf8")
-  const hmac = crypto.createHmac(sigHashAlg, secret)
+  const hmac = crypto.createHmac(sigHashAlg, config.secret)
   const digest = Buffer.from(sigHashAlg + "=" + hmac.update(req.rawBody).digest("hex"), "utf8")
   
   if (sig.length !== digest.length || !crypto.timingSafeEqual(digest, sig)) {
