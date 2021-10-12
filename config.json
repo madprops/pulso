@@ -1,4 +1,7 @@
 {
   "port": 1234,
-  "secret": "secret"
+  "secret": "secret",
+  "repos": {
+    "myrepo": "some command to execute"
+  }
 }

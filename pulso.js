@@ -32,7 +32,12 @@ function verifyPostData(req, res, next) {
 }
 
 app.post("/update", verifyPostData, function (req, res) {
-  console.log("Verification successful")
+  console.info("Verification successful")
+  let repo = req.body.repository.name
+  if (config.repos[repo]) {
+    console.info(`Executing actions for ${repo}`)
+    execSync(config.repos[repo])
+  }
 })
 
 app.use((err, req, res, next) => {
@@ -40,4 +45,4 @@ app.use((err, req, res, next) => {
   res.status(403).send("Request body was not signed or verification failed")
 })
 
-app.listen(config.port, () => console.log(`Listening on port ${config.port}`))
+app.listen(config.port, () => console.info(`Listening on port ${config.port}`))
