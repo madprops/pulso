@@ -2,6 +2,8 @@ const express = require("express")
 const config = require("./config.json")
 const app = express()
 
+app.use(express.json())
+
 app.post('/update', (req, res) => {
   console.log(req.body)
 })
