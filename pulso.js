@@ -34,10 +34,13 @@ function verifyPostData(req, res, next) {
 app.post("/update", verifyPostData, function (req, res) {
   console.info("Verification successful")
   let repo = req.body.repository.name
+  
   if (config.repos[repo]) {
     console.info(`Executing actions for ${repo}`)
     execSync(config.repos[repo])
   }
+
+  fs.writeFileSync("last_response.json", JSON.stringify(req.body))
 })
 
 app.use((err, req, res, next) => {
