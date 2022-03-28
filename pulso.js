@@ -41,7 +41,7 @@ app.post("/update", verifyPostData, function (req, res) {
     execSync(config.repos[repo])
   }
 
-  fs.writeFileSync("last_response.json", JSON.stringify(req.body))
+  fs.writeFileSync(__dirname + "/last_response.json", JSON.stringify(req.body))
 })
 
 app.use((err, req, res, next) => {
