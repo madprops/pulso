@@ -2,6 +2,9 @@
   "port": 1234,
   "secret": "secret",
   "repos": {
-    "myrepo": "some command to execute"
+    "myrepo": {
+      "push": "some command to execute",
+      "release": "some command to execute"
+    }
   }
 }
