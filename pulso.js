@@ -35,10 +35,15 @@ function verifyPostData(req, res, next) {
 app.post("/update", verifyPostData, function (req, res) {
   console.info("Verification successful")
   let repo = req.body.repository.name
-  
-  if (config.repos[repo]) {
-    console.info(`Executing actions for ${repo}`)
-    execSync(config.repos[repo])
+
+  if (req.body.ref.startsWith("refs/heads/master")) {
+    if (config.repos[repo]) {
+      console.info(`Executing push action for ${repo}`)
+      execSync(config.repos[repo].push)
+    }
+  } else if (req.body.ref.startsWith("refs/tags")) {
+    console.info(`Executing release action for ${repo}`)
+    execSync(config.repos[repo].release)
   }
 
   fs.writeFileSync(__dirname + "/last_response.json", JSON.stringify(req.body))
