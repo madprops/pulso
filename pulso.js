@@ -1,3 +1,4 @@
+const fs = require("fs")
 const crypto = require("crypto")
 const express = require("express")
 const config = require("./config.json")
