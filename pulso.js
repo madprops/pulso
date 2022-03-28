@@ -37,13 +37,15 @@ app.post("/update", verifyPostData, function (req, res) {
   let repo = req.body.repository.name
 
   if (req.body.ref.startsWith("refs/heads/master")) {
-    if (config.repos[repo]) {
+    if (config.repos[repo].push) {
       console.info(`Executing push action for ${repo}`)
       execSync(config.repos[repo].push)
     }
   } else if (req.body.ref.startsWith("refs/tags")) {
-    console.info(`Executing release action for ${repo}`)
-    execSync(config.repos[repo].release)
+    if (config.repos[repo].release) {
+      console.info(`Executing release action for ${repo}`)
+      execSync(config.repos[repo].release)
+    }
   }
 
   fs.writeFileSync(__dirname + "/last_response.json", JSON.stringify(req.body))
